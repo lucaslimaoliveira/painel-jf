@@ -1,0 +1,163 @@
+:root {
+    --cor-primaria: #0f172a;
+    --cor-secundaria: #1b5e20;
+    --cor-acento: #2e7d32;
+    --cor-dourada: #c9a227;
+    --cor-dourada-suave: #f3e7b0;
+    --bg-pagina: #eef3f8;
+    --bg-card: rgba(255, 255, 255, 0.96);
+    --texto-principal: #0f172a;
+    --texto-secundario: #475569;
+    --borda: #dbe4ee;
+    --sombra-forte: 0 24px 60px rgba(15, 23, 42, 0.18);
+    --sombra-card: 0 10px 30px rgba(15, 23, 42, 0.12);
+    --raio-xl: 24px;
+    --raio-lg: 18px;
+  }
+  
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: var(--texto-principal);
+    background:
+      radial-gradient(circle at top left, rgba(201, 162, 39, 0.22), transparent 28%),
+      radial-gradient(circle at bottom right, rgba(46, 125, 50, 0.20), transparent 26%),
+      linear-gradient(135deg, #eaf0f6 0%, #f7fafc 48%, #edf3f8 100%);
+  }
+  
+  ul {
+    width: min(100%, 820px);
+    list-style: none;
+    padding: 2.2rem;
+    border: 1px solid rgba(255, 255, 255, 0.55);
+    border-radius: var(--raio-xl);
+    background: var(--bg-card);
+    box-shadow: var(--sombra-forte);
+    backdrop-filter: blur(10px);
+    display: grid;
+    gap: 1rem;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  ul::before {
+    content: "Hub Painel J&F";
+    display: block;
+    font-size: clamp(1.8rem, 2.8vw, 2.5rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    color: var(--cor-primaria);
+    margin-bottom: 0.2rem;
+  }
+  
+  ul::after {
+    content: "Escolha um dos painéis abaixo para abrir o projeto com o visual inspirado nas aulas 13 e 14.";
+    display: block;
+    max-width: 580px;
+    line-height: 1.6;
+    color: var(--texto-secundario);
+    margin-bottom: 1rem;
+  }
+  
+  ul a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  ul li {
+    position: relative;
+    padding: 1.3rem 1.4rem;
+    border-radius: var(--raio-lg);
+    border: 1px solid var(--borda);
+    background: linear-gradient(145deg, #ffffff 0%, #f8fbfd 100%);
+    box-shadow: var(--sombra-card);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--texto-principal);
+    transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    overflow: hidden;
+  }
+  
+  ul li::before {
+    content: "Painel";
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 74px;
+    margin-right: 0.9rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 999px;
+    background: rgba(46, 125, 50, 0.10);
+    color: var(--cor-secundaria);
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  
+  ul li::after {
+    content: "→";
+    position: absolute;
+    right: 1.2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.35rem;
+    color: var(--cor-dourada);
+    transition: transform 0.22s ease;
+  }
+  
+  ul a:hover li,
+  ul a:focus-visible li {
+    transform: translateY(-4px);
+    border-color: rgba(201, 162, 39, 0.65);
+    box-shadow: 0 16px 35px rgba(15, 23, 42, 0.16);
+  }
+  
+  ul a:hover li::after,
+  ul a:focus-visible li::after {
+    transform: translate(4px, -50%);
+  }
+  
+  ul a:nth-of-type(1) li {
+    border-left: 5px solid var(--cor-dourada);
+  }
+  
+  ul a:nth-of-type(2) li {
+    border-left: 5px solid var(--cor-acento);
+  }
+  
+  @media (max-width: 640px) {
+    body {
+      padding: 1rem;
+    }
+  
+    ul {
+      padding: 1.4rem;
+    }
+  
+    ul::after {
+      margin-bottom: 0.6rem;
+    }
+  
+    ul li {
+      padding: 1.05rem 3rem 1.05rem 1rem;
+      font-size: 0.98rem;
+    }
+  
+    ul li::before {
+      display: block;
+      width: fit-content;
+      margin: 0 0 0.65rem 0;
+    }
+  }
+  
