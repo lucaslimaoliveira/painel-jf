@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel J&F — Aula 14</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!--
+    PAINEL DO COLABORADOR — Banco Original
+    Versão: Aula 14 — Manipulação de Conteúdo
+
+    ESTRUTURA:
+    - <main id="painel"> é o contêiner raiz
+    - Cada elemento tem um id único para getElementById
+    - Atributos data-* guardam metadados que o JS lê via dataset
+    - O <script> fica SEMPRE no final do <body>
+      → Garante que o DOM está totalmente carregado antes de executar
+  -->
+
+  <main id="painel"
+        class="painel-container"
+        data-versao="2.0"
+        data-modulo="M2-Aula14"
+        data-auditado="false">
+
+    <!-- CABEÇALHO do painel: nome e cargo do colaborador -->
+    <header class="painel-header">
+      <div class="logo-area">
+        <span class="logo-texto">Banco Original</span>
+        <span class="logo-sub">Grupo J&F</span>
+      </div>
+
+      <div class="colaborador-info">
+        <!--
+          id="nomeColaborador" → alvo de textContent na Aula 14
+          Texto inicial "Carregando..." é substituído pelo JS
+        -->
+        <h2 id="nomeColaborador" class="colaborador-nome">Carregando...</h2>
+
+        <!--
+          data-nivel="junior" → metadado lido via dataset.nivel
+          O JS atualiza para "senior" após o login
+        -->
+        <span id="cargo"
+              class="colaborador-cargo"
+              data-nivel="junior">--</span>
+      </div>
+    </header>
+
+    <!-- SEÇÃO FINANCEIRA: saldo e empresa -->
+    <section class="painel-saldo">
+
+      <!--
+        id="saldo" → alvo de textContent
+        Texto "R$ ---" é substituído pelo JS com o valor real
+      -->
+      <div class="saldo-card">
+        <span class="saldo-label">Saldo disponível</span>
+        <span id="saldo" class="saldo-valor">R$ ---</span>
+      </div>
+
+      <!--
+        data-cnpj e data-segmento → metadados lidos via dataset
+        innerHTML é usado aqui para inserir HTML estruturado (Tarefa 08)
+        ✅ Seguro porque os dados vêm do script, não do usuário
+      -->
+      <div id="empresa"
+           class="empresa-card"
+           data-cnpj="60.701.190/0001-04"
+           data-segmento="financeiro"
+           data-fundacao="2013">
+        Banco Original
+      </div>
+
+    </section>
+
+    <!-- STATUS e metadados do colaborador -->
+    <section class="painel-status">
+
+      <!--
+        data-ativo="true" → metadado boolean como string
+        O JS atualiza via dataset.ativo = "false" (Tarefa 05)
+        CSS pode usar [data-ativo="true"] para estilizar
+      -->
+      <div id="status"
+           class="status-badge"
+           data-ativo="true">
+        Ativo
+      </div>
+
+    </section>
+
+    <!-- LISTA DE PRODUTOS: 3 itens com data-* para filtros futuros -->
+    <section class="produtos-section">
+      <h3 class="produtos-titulo">Produtos do Grupo J&F</h3>
+
+      <!--
+        data-empresa → filtragem por empresa (Aulas 16+)
+        data-preco   → cálculos e ordenação
+        class="item" → seleção via querySelectorAll(".item") (Tarefa 06/07)
+      -->
+      <ul id="lista-produtos" class="lista-produtos">
+
+        <li class="item"
+            data-empresa="JBS"
+            data-preco="29.90"
+            data-categoria="proteina">
+          Frango Temperado 1kg
+        </li>
+
+        <li class="item"
+            data-empresa="Seara"
+            data-preco="8.50"
+            data-categoria="molho">
+          Molho de Tomate 340g
+        </li>
+
+        <li class="item"
+            data-empresa="Vigor"
+            data-preco="12.00"
+            data-categoria="laticinios">
+          Iogurte Natural 500g
+        </li>
+
+      </ul>
+    </section>
+
+  </main>
+
+  <!--
+    REGRA FUNDAMENTAL — <script> no final do <body>
+    Se o script estiver no <head>, o DOM ainda não existe quando ele executar.
+    Resultado: getElementById retorna null, e textContent lança TypeError.
+
+    Para usar no exercício: ative 03_script.js (versão do aluno)
+    Para ver o gabarito:    ative 04_gabarito.js (versão do professor)
+  -->
+  <script src="script.js"></script>
+  
+
+</body>
+</html>

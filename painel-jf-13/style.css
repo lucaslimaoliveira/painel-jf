@@ -1,0 +1,335 @@
+/*
+  ============================================================
+  ARQUIVO 02 — 02_style.css
+  Projeto: Painel Colaborador J&F
+  Disciplina: DAD 2026 — Desenvolvimento de Aplicações Dinâmicas
+  Aula 13: DOM e Seleção de Elementos
+  ============================================================
+
+  O QUE É ESTE ARQUIVO?
+  ──────────────────────
+  Este arquivo controla a APARÊNCIA visual da página.
+  O HTML define o "o quê" (conteúdo e estrutura).
+  O CSS define o "como parece" (cores, tamanhos, espaçamento).
+
+  COMO ELE É CARREGADO?
+  ─────────────────────
+  Pelo <link rel="stylesheet" href="02_style.css"> no <head> do HTML.
+  O navegador carrega o CSS antes de renderizar o conteúdo,
+  garantindo que a página já apareça estilizada desde o início.
+
+  ORGANIZAÇÃO DESTE ARQUIVO:
+  ───────────────────────────
+  1. Reset e variáveis CSS
+  2. Tipografia e corpo da página
+  3. Contêiner principal (#app)
+  4. Cabeçalho (.cabecalho)
+  5. Seções (.secao)
+  6. Lista de produtos (#lista, .item)
+  7. Item em destaque (.destaque)
+  8. Botão (.btn-primario)
+  9. Rodapé (.rodape)
+  ============================================================
+*/
+
+
+/* ══════════════════════════════════════════════════════════
+   1. RESET E VARIÁVEIS CSS
+   ══════════════════════════════════════════════════════════
+
+   O seletor * (asterisco) seleciona TODOS os elementos da página.
+   Usamos ele para aplicar um "reset" — remover os estilos padrão
+   do navegador que variam entre Chrome, Firefox, Safari etc.
+
+   box-sizing: border-box
+   ───────────────────────
+   Por padrão, o CSS usa box-sizing: content-box, onde:
+     largura total = width + padding + border (confuso!)
+   Com border-box:
+     largura total = width (padding e borda ficam DENTRO)
+   Muito mais fácil de calcular layouts!
+
+   margin: 0 e padding: 0
+   ───────────────────────
+   Remove os espaçamentos padrão do navegador.
+   Sem isso, a página teria margens "misteriosas" em <body>, <h1> etc.
+*/
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/*
+   VARIÁVEIS CSS (Custom Properties)
+   ───────────────────────────────────
+   Definidas em :root (que representa o elemento <html>).
+   Prefixo: -- (dois traços)
+   Uso: var(--nome-da-variavel)
+
+   Vantagem: alterar a cor primária aqui muda em TODO o projeto.
+   É como uma "paleta de cores centralizada".
+*/
+:root {
+  --cor-primaria:    #1B2A4A;   /* azul-marinho escuro — identidade J&F    */
+  --cor-secundaria:  #1D6FA4;   /* azul médio — links e destaques           */
+  --cor-destaque:    #C9A227;   /* dourado J&F — itens especiais            */
+  --cor-fundo:       #F1F5F9;   /* cinza-claro — fundo da página            */
+  --cor-branco:      #FFFFFF;   /* branco puro — cards e áreas de conteúdo */
+  --cor-texto:       #0F172A;   /* quase preto — texto principal             */
+  --cor-texto-med:   #334155;   /* cinza-escuro — texto secundário          */
+  --cor-borda:       #E2E8F0;   /* cinza-claro — bordas sutis               */
+  --cor-verde:       #15803D;   /* verde — item em destaque                  */
+  --raio-borda:      8px;       /* arredondamento padrão dos cantos          */
+  --sombra-suave:    0 2px 8px rgba(0,0,0,0.08); /* sombra discreta        */
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   2. TIPOGRAFIA E CORPO DA PÁGINA
+   ══════════════════════════════════════════════════════════
+
+   O seletor body aplica estilos ao corpo inteiro da página.
+   Como a maioria dos elementos herda tipografia do pai,
+   definir font-family no body afeta praticamente tudo.
+
+   font-family: sans-serif
+   ────────────────────────
+   "sans-serif" é uma família genérica.
+   O navegador escolhe a melhor fonte sem serifa disponível no sistema
+   (Segoe UI no Windows, San Francisco no Mac, Roboto no Android).
+
+   line-height: 1.6
+   ─────────────────
+   Espaçamento entre linhas = 1.6× o tamanho da fonte.
+   Melhora muito a legibilidade de textos corridos.
+*/
+body {
+  font-family: sans-serif;
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
+  line-height: 1.6;
+  padding: 1.5rem;   /* 1rem = tamanho da fonte base (geralmente 16px) */
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   3. CONTÊINER PRINCIPAL (#app)
+   ══════════════════════════════════════════════════════════
+
+   O seletor #app usa o símbolo # para selecionar pelo id.
+   Corresponde ao elemento <main id="app"> no HTML.
+
+   max-width: 860px
+   ─────────────────
+   Limita a largura máxima do conteúdo.
+   Em telas grandes, o texto não fica excessivamente largo
+   (linhas muito longas são difíceis de ler).
+
+   margin: 0 auto
+   ───────────────
+   margin-top e margin-bottom = 0
+   margin-left e margin-right = auto (centraliza horizontalmente)
+*/
+#app {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   4. CABEÇALHO (.cabecalho)
+   ══════════════════════════════════════════════════════════
+
+   O seletor .cabecalho usa o ponto (.) para selecionar por classe.
+   Corresponde ao <header class="cabecalho"> no HTML.
+*/
+.cabecalho {
+  background-color: var(--cor-primaria);
+  color: var(--cor-branco);
+  padding: 1.5rem 2rem;
+  border-radius: var(--raio-borda);
+  margin-bottom: 1.5rem;
+  box-shadow: var(--sombra-suave);
+}
+
+/*
+   Seletor descendente: .cabecalho h1
+   ────────────────────────────────────
+   Seleciona qualquer <h1> que esteja DENTRO de .cabecalho.
+   Isso garante que apenas o h1 do cabeçalho receba este estilo,
+   sem afetar outros h1 da página.
+*/
+.cabecalho h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;   /* espaçamento sutil entre letras */
+}
+
+.cabecalho .subtitulo {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.75);   /* branco com 75% de opacidade */
+  margin-top: 0.25rem;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   5. SEÇÕES (.secao)
+   ══════════════════════════════════════════════════════════
+
+   Tanto #catalogo quanto #sobre têm class="secao".
+   Aplicamos o estilo visual pela classe — reutilizável em ambas.
+   Poderíamos usar id para estilos únicos de cada uma.
+*/
+.secao {
+  background-color: var(--cor-branco);
+  border-radius: var(--raio-borda);
+  padding: 1.5rem 2rem;
+  margin-bottom: 1.5rem;
+  box-shadow: var(--sombra-suave);
+  border: 1px solid var(--cor-borda);
+}
+
+/* h2 dentro de qualquer .secao */
+.secao h2 {
+  font-size: 1.2rem;
+  color: var(--cor-primaria);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+
+  /*
+    border-bottom: cria uma linha divisória abaixo do título.
+    3px solid → linha sólida de 3 pixels
+    var(--cor-destaque) → dourado J&F
+  */
+  border-bottom: 3px solid var(--cor-destaque);
+}
+
+/* parágrafos dentro de .secao */
+.secao p {
+  color: var(--cor-texto-med);
+  margin-bottom: 0.75rem;
+}
+
+/* remove a margem do último parágrafo (evita espaço extra no fundo) */
+.secao p:last-child {
+  margin-bottom: 0;
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   6. LISTA DE PRODUTOS
+   ══════════════════════════════════════════════════════════
+
+   #lista → seleciona pelo id (há apenas uma lista com este id)
+   list-style: none → remove os pontos/números padrão da lista
+*/
+#lista {
+  list-style: none;
+  display: flex;         /* layout flexível — itens em linha */
+  flex-wrap: wrap;       /* quebra para próxima linha se necessário */
+  gap: 0.75rem;          /* espaçamento entre os itens */
+  margin-bottom: 1.25rem;
+}
+
+/*
+   .item → seleciona todos os <li class="item">
+   Estilo base compartilhado por todos os produtos da lista.
+*/
+.item {
+  background-color: var(--cor-fundo);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio-borda);
+  padding: 0.6rem 1.1rem;
+  font-size: 0.9rem;
+  color: var(--cor-texto-med);
+  font-weight: 500;
+
+  /*
+    transition → anima mudanças de propriedades CSS suavemente.
+    Quando o cursor passa em cima (.item:hover), a mudança de cor
+    acontece em 0.2 segundos em vez de aparecer de repente.
+  */
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+/* .item:hover → estilo aplicado quando o cursor está sobre o elemento */
+.item:hover {
+  border-color: var(--cor-secundaria);
+  background-color: #DBEAFE;   /* azul-claro — feedback visual ao usuário */
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   7. ITEM EM DESTAQUE (.destaque)
+   ══════════════════════════════════════════════════════════
+
+   O <li class="item destaque"> tem DUAS classes.
+   Este seletor .destaque sobrescreve algumas propriedades de .item.
+
+   Ordem importa: .destaque vem depois de .item no CSS,
+   então suas regras têm precedência para as mesmas propriedades.
+
+   Seletor .item.destaque (sem espaço):
+   ─────────────────────────────────────
+   Seleciona elementos que têm AMBAS as classes simultaneamente.
+   .item.destaque → precisa ter class="item destaque" (as duas juntas)
+   Diferente de .item .destaque → que seria um .destaque DENTRO de um .item
+*/
+.item.destaque {
+  background-color: #DCFCE7;     /* verde-claro */
+  border-color: var(--cor-verde);
+  color: var(--cor-verde);
+  font-weight: 700;
+}
+
+.item.destaque:hover {
+  background-color: #BBF7D0;   /* verde um pouco mais escuro no hover */
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   8. BOTÃO (.btn-primario)
+   ══════════════════════════════════════════════════════════
+
+   Estilo para o <button class="btn-primario">.
+   cursor: pointer → muda o cursor para "mãozinha" ao passar sobre o botão
+*/
+.btn-primario {
+  display: inline-block;
+  background-color: var(--cor-secundaria);
+  color: var(--cor-branco);
+  border: none;                     /* remove a borda padrão do navegador */
+  border-radius: var(--raio-borda);
+  padding: 0.55rem 1.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.btn-primario:hover {
+  background-color: var(--cor-primaria);
+}
+
+/*
+   :active → estado quando o botão está sendo clicado (pressionado).
+   translateY(1px) → empurra 1px para baixo → sensação de "pressionar"
+*/
+.btn-primario:active {
+  transform: translateY(1px);
+}
+
+
+/* ══════════════════════════════════════════════════════════
+   9. RODAPÉ (.rodape)
+   ══════════════════════════════════════════════════════════
+*/
+.rodape {
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--cor-texto-med);
+  padding: 1rem 0;
+  margin-top: 0.5rem;
+  border-top: 1px solid var(--cor-borda);
+}

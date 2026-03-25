@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<!--
+  ============================================================
+  ARQUIVO 01 — 01_index.html
+  Projeto: Painel Colaborador J&F
+  Disciplina: DAD 2026 — Desenvolvimento de Aplicações Dinâmicas
+  Aula 13: DOM e Seleção de Elementos
+  Professor: Rodolfo Gonçalves da Silva
+  Instituição: Germinare TECH / Instituto J&F
+  ============================================================
+
+  O QUE É ESTE ARQUIVO?
+  ──────────────────────
+  Este é o arquivo HTML principal do projeto "Painel Colaborador J&F".
+  Ele define a ESTRUTURA da página — ou seja, o esqueleto com o conteúdo
+  que o navegador vai transformar em uma árvore DOM.
+
+  REGRA FUNDAMENTAL:
+  ──────────────────
+  O <script> SEMPRE vai no final do <body>, NUNCA no <head>.
+  Motivo: o JavaScript precisa encontrar os elementos HTML para selecioná-los.
+  Se o script rodar antes do HTML existir, querySelector retorna null.
+
+  ESTRUTURA DE ARQUIVOS DO PROJETO:
+  ───────────────────────────────────
+  01_index.html   ← você está aqui (estrutura / esqueleto)
+  02_style.css    ← aparência visual (cores, fontes, layout)
+  03_script.js    ← comportamento (seleção de elementos, lógica)
+  04_gabarito.js  ← gabarito completo dos 10 seletores comentados
+  ============================================================
+-->
+<html lang="pt-BR">
+
+<head>
+  <!-- ─────────────────────────────────────────────────────
+    META CHARSET
+    Define a codificação de caracteres como UTF-8.
+    Sem isso, acentos como ã, ç, é não aparecem corretamente.
+  ──────────────────────────────────────────────────────── -->
+  <meta charset="UTF-8">
+
+  <!-- ─────────────────────────────────────────────────────
+    META VIEWPORT
+    Configura o comportamento em telas de celular.
+    width=device-width → a largura da página iguala à tela do dispositivo
+    initial-scale=1    → sem zoom inicial
+    Sem isso, o site aparece "pequenininho" no celular.
+  ──────────────────────────────────────────────────────── -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- ─────────────────────────────────────────────────────
+    TÍTULO DA ABA
+    Aparece na aba do navegador e nos favoritos.
+    Boas práticas: título descritivo, não genérico.
+  ──────────────────────────────────────────────────────── -->
+  <title>Painel Colaborador J&F</title>
+
+  <!-- ─────────────────────────────────────────────────────
+    LINK PARA O CSS
+    Conecta este HTML com o arquivo 02_style.css.
+    rel="stylesheet" → informa ao navegador que é uma folha de estilos
+    href="02_style.css" → caminho relativo ao arquivo CSS
+
+    POR QUE NO <head>?
+    O CSS vai no <head> para ser carregado ANTES do conteúdo aparecer.
+    Se o CSS fosse no final do <body>, o usuário veria a página sem estilo
+    por um instante — isso se chama FOUC (Flash of Unstyled Content).
+  ──────────────────────────────────────────────────────── -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <!-- ─────────────────────────────────────────────────────
+    ELEMENTO <main>
+    Representa o conteúdo principal da página.
+    O id="app" é o ponto de entrada do JavaScript:
+    o script vai selecionar este elemento primeiro para confirmar
+    que a página carregou corretamente.
+
+    Analogia: o <main id="app"> é como a "porta de entrada" do JS.
+  ──────────────────────────────────────────────────────── -->
+  <main id="app">
+
+    <!-- ───────────────────────────────────────────────────
+      CABEÇALHO DO PAINEL
+      <header> é uma tag semântica — indica ao navegador (e ao Google)
+      que este bloco contém informações de cabeçalho.
+      Isso é melhor do que usar <div> genérico para tudo.
+    ──────────────────────────────────────────────────────── -->
+    <header class="cabecalho">
+      <h1>Painel Colaborador J&F</h1>
+      <p class="subtitulo">Grupo J&F — Produtos e Marcas</p>
+    </header>
+
+    <!-- ───────────────────────────────────────────────────
+      SEÇÃO: CATÁLOGO DE PRODUTOS
+      id="catalogo"   → identificador único → usado com getElementById
+      class="secao"   → classe reutilizável → usada com querySelector/All
+
+      Por que usar id E class juntos?
+      - id → para selecionar UM elemento específico (getElementById)
+      - class → para selecionar GRUPOS de elementos parecidos
+    ──────────────────────────────────────────────────────── -->
+    <section id="catalogo" class="secao">
+
+      <h2>Produtos do Grupo J&F</h2>
+
+      <!-- ─────────────────────────────────────────────────
+        LISTA DE PRODUTOS
+        id="lista" → identificador único da lista
+        Cada <li> tem:
+          class="item"           → classe comum a todos os itens
+          data-marca="..."       → atributo de dados personalizado (data-*)
+                                   usado para identificar a marca sem depender
+                                   de class ou id. Selecionável com CSS:
+                                   [data-marca='seara']
+      ──────────────────────────────────────────────────────── -->
+      <ul id="lista">
+
+        <li class="item" data-marca="seara">
+          Frango Seara
+        </li>
+
+        <li class="item" data-marca="flora">
+          Sabão Flora
+        </li>
+
+        <!-- ───────────────────────────────────────────────
+          ITEM COM DUAS CLASSES
+          class="item destaque" → este <li> tem DUAS classes ao mesmo tempo:
+            - "item"     → compartilhada com todos os outros itens
+            - "destaque" → exclusiva deste elemento (vai ficar em evidência)
+          Para selecioná-lo com ambas as classes: .item.destaque
+          (sem espaço entre as classes no seletor CSS)
+        ──────────────────────────────────────────────────── -->
+        <li class="item destaque" data-marca="vigor">
+          Iogurte Vigor
+        </li>
+
+      </ul>
+
+      <!-- ─────────────────────────────────────────────────
+        BOTÃO DE AÇÃO
+        class="btn-primario" → classe que define o estilo visual do botão
+        Será selecionado pelo combinador descendente: section button
+        (significa: qualquer <button> que esteja dentro de um <section>)
+      ──────────────────────────────────────────────────────── -->
+      <button class="btn-primario">
+        Ver Todos
+      </button>
+
+    </section>
+    <!-- fim #catalogo -->
+
+    <!-- ───────────────────────────────────────────────────
+      SEÇÃO: SOBRE O GRUPO
+      Uma segunda seção — demonstra que existem múltiplos elementos
+      com a mesma tag <section> e a mesma classe "secao" na página.
+      querySelectorAll("section") retornaria as DUAS seções.
+    ──────────────────────────────────────────────────────── -->
+    <section id="sobre" class="secao">
+
+      <h2>Sobre o Grupo J&F</h2>
+
+      <p>
+        O Grupo J&F é um dos maiores conglomerados empresariais do Brasil,
+        presente nos setores de alimentos, celulose, energia e finanças.
+      </p>
+
+      <p>
+        Marcas como JBS, Seara, Flora, Vigor e Banco Original fazem parte
+        deste grupo que emprega milhares de colaboradores em todo o país.
+      </p>
+
+    </section>
+    <!-- fim #sobre -->
+
+  </main>
+  <!-- fim #app -->
+
+  <!-- ─────────────────────────────────────────────────────
+    RODAPÉ
+    <footer> tag semântica → informa que é o rodapé da página.
+  ──────────────────────────────────────────────────────── -->
+  <footer class="rodape">
+    <p>DAD 2026 &bull; Germinare TECH / Instituto J&F &bull; Prof. Rodolfo G. da Silva</p>
+  </footer>
+
+  <!-- ══════════════════════════════════════════════════════
+    SCRIPTS — SEMPRE AO FINAL DO <body>
+
+    Por que aqui?
+    1. O HTML acima já foi lido e a árvore DOM foi montada.
+    2. Agora o JavaScript consegue encontrar todos os elementos.
+    3. Se colocássemos no <head>, o DOM ainda estaria vazio
+       e qualquer querySelector retornaria null.
+
+    Ordem dos scripts: primeiro o exercício (03), depois o gabarito (04).
+    Em produção você usaria apenas um deles.
+  ══════════════════════════════════════════════════════════ -->
+
+  <!--
+    Para praticar o exercício — descomentar este e comentar o gabarito:
+    <script src="03_script.js"></script>
+  -->
+
+  <!-- Gabarito comentado para o professor: -->
+  <script src="script.js"></script>
+
+</body>
+
+</html>

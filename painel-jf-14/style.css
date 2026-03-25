@@ -1,0 +1,223 @@
+/*
+  PAINEL J&F — style.css
+  Aula 14: Manipulação de Conteúdo
+  ──────────────────────────────────────────────────────────────
+  Variáveis CSS: centralizam todas as cores e valores reutilizados.
+  Atributos data-* são usados para estilização via CSS attribute selectors.
+*/
+
+/* ── RESET E VARIÁVEIS ──────────────────────────────────────── */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Paleta do Banco Original / Grupo J&F */
+  --cor-primaria:    #1B5E20;   /* verde escuro */
+  --cor-secundaria:  #2E7D32;   /* verde médio */
+  --cor-acento:      #43A047;   /* verde claro */
+  --cor-gold:        #C9A227;   /* dourado J&F */
+
+  /* Neutros */
+  --bg-pagina:       #F1F5F9;
+  --bg-card:         #FFFFFF;
+  --bg-dark:         #0D1B2A;
+  --borda:           #E2E8F0;
+
+  /* Textos */
+  --texto-principal: #0F172A;
+  --texto-medio:     #334155;
+  --texto-claro:     #64748B;
+
+  /* Status */
+  --cor-ativo:       #16A34A;
+  --cor-inativo:     #DC2626;
+
+  /* Espaçamentos */
+  --raio:            8px;
+  --sombra:          0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* ── BASE DA PÁGINA ─────────────────────────────────────────── */
+body {
+  font-family: 'Segoe UI', Calibri, sans-serif;
+  background-color: var(--bg-pagina);
+  color: var(--texto-principal);
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+/* ── PAINEL CONTAINER ───────────────────────────────────────── */
+.painel-container {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ── HEADER ─────────────────────────────────────────────────── */
+.painel-header {
+  background: var(--bg-dark);
+  border-radius: var(--raio);
+  padding: 1.5rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--sombra);
+}
+
+.logo-texto {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #FFFFFF;
+}
+
+.logo-sub {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--cor-gold);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-top: 0.25rem;
+}
+
+.colaborador-nome {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  /* textContent desta propriedade é atualizado pelo JS na Aula 14 */
+}
+
+.colaborador-cargo {
+  display: inline-block;
+  margin-top: 0.4rem;
+  font-size: 0.85rem;
+  color: #94A3B8;
+  background: #1E3A5F;
+  padding: 0.2rem 0.7rem;
+  border-radius: 4px;
+}
+
+/* Estilização via atributo data-nivel — demonstra poder do CSS+dataset */
+.colaborador-cargo[data-nivel="junior"] { border-left: 3px solid #64748B; }
+.colaborador-cargo[data-nivel="pleno"]  { border-left: 3px solid var(--cor-acento); }
+.colaborador-cargo[data-nivel="senior"] { border-left: 3px solid var(--cor-gold); }
+
+/* ── SEÇÃO SALDO ────────────────────────────────────────────── */
+.painel-saldo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.saldo-card {
+  background: var(--bg-card);
+  border-radius: var(--raio);
+  padding: 1.5rem;
+  box-shadow: var(--sombra);
+  border-left: 4px solid var(--cor-primaria);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.saldo-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--texto-claro);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.saldo-valor {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--cor-primaria);
+  /* textContent deste elemento é atualizado pelo JS */
+}
+
+.empresa-card {
+  background: var(--bg-card);
+  border-radius: var(--raio);
+  padding: 1.5rem;
+  box-shadow: var(--sombra);
+  border-left: 4px solid var(--cor-gold);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--texto-principal);
+  /* innerHTML deste elemento recebe <strong> + CNPJ pelo JS */
+}
+
+/* ── SEÇÃO STATUS ────────────────────────────────────────────── */
+.painel-status {
+  display: flex;
+  gap: 1rem;
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.2rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  /* Cor muda conforme o valor de data-ativo — CSS attribute selector */
+}
+
+.status-badge[data-ativo="true"] {
+  background-color: #DCFCE7;
+  color: var(--cor-ativo);
+  border: 1px solid var(--cor-ativo);
+}
+
+.status-badge[data-ativo="false"] {
+  background-color: #FEE2E2;
+  color: var(--cor-inativo);
+  border: 1px solid var(--cor-inativo);
+}
+
+/* ── SEÇÃO PRODUTOS ─────────────────────────────────────────── */
+.produtos-section {
+  background: var(--bg-card);
+  border-radius: var(--raio);
+  padding: 1.5rem;
+  box-shadow: var(--sombra);
+}
+
+.produtos-titulo {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--texto-medio);
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid var(--borda);
+}
+
+.lista-produtos {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.item {
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+  background: var(--bg-pagina);
+  border-left: 3px solid var(--borda);
+  font-size: 0.95rem;
+  color: var(--texto-medio);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.item:hover { background: #E2E8F0; }
+
+/* Cores por empresa via data-empresa — funcionalidade de filtro futura */
+.item[data-empresa="JBS"]   { border-left-color: #B71C1C; }
+.item[data-empresa="Seara"] { border-left-color: #E65100; }
+.item[data-empresa="Vigor"] { border-left-color: #1565C0; }
