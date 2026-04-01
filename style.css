@@ -1,163 +1,300 @@
+/* =========================================================
+   HUB DE PAINÉIS — STYLE BASE REUTILIZÁVEL
+   ---------------------------------------------------------
+   Objetivo:
+   - servir como estilo padrão da raiz do projeto
+   - facilitar a adição de novos painéis no futuro
+   - manter identidade visual próxima dos painéis internos
+
+   Como usar no futuro:
+   1) adicione um novo <a> dentro da <ul>
+   2) coloque o nome do painel dentro do <li>
+   3) o card seguirá o mesmo padrão visual automaticamente
+
+   Exemplo:
+   <a href="painel-jf-15/index.html"><li>Painel-JF-15</li></a>
+   ========================================================= */
+
 :root {
-    --cor-primaria: #0f172a;
-    --cor-secundaria: #1b5e20;
-    --cor-acento: #2e7d32;
-    --cor-dourada: #c9a227;
-    --cor-dourada-suave: #f3e7b0;
-    --bg-pagina: #eef3f8;
-    --bg-card: rgba(255, 255, 255, 0.96);
-    --texto-principal: #0f172a;
-    --texto-secundario: #475569;
-    --borda: #dbe4ee;
-    --sombra-forte: 0 24px 60px rgba(15, 23, 42, 0.18);
-    --sombra-card: 0 10px 30px rgba(15, 23, 42, 0.12);
-    --raio-xl: 24px;
-    --raio-lg: 18px;
-  }
-  
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  
+  /* Paleta principal inspirada nos painéis */
+  --color-primary: #163a2f;
+  --color-primary-strong: #0d281f;
+  --color-primary-soft: #215241;
+  --color-accent: #c9a227;
+  --color-accent-soft: #f4ead0;
+
+  /* Neutros */
+  --color-bg: #f4f7f6;
+  --color-surface: #ffffff;
+  --color-surface-muted: #f8faf9;
+  --color-border: #d9e3df;
+  --color-text: #17212b;
+  --color-text-soft: #53606d;
+  --color-text-inverse: #ffffff;
+
+  /* Estados */
+  --color-success: #1f8f4d;
+  --color-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+  --color-shadow-soft: 0 10px 24px rgba(15, 23, 42, 0.06);
+
+  /* Layout */
+  --radius-lg: 24px;
+  --radius-md: 18px;
+  --radius-sm: 12px;
+  --container-width: 1120px;
+  --gap: 1.25rem;
+
+  /* Tipografia */
+  --font-base: 'Segoe UI', Inter, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  font-family: var(--font-base);
+  color: var(--color-text);
+  background:
+    radial-gradient(circle at top left, rgba(201, 162, 39, 0.18), transparent 28%),
+    radial-gradient(circle at right center, rgba(22, 58, 47, 0.10), transparent 24%),
+    linear-gradient(180deg, #f7faf9 0%, #eef3f1 100%);
+  padding: 40px 20px;
+}
+
+/* ---------------------------------------------------------
+   ESTRUTURA AUTOMÁTICA SEM DEPENDER DE CLASSES NO HTML
+   --------------------------------------------------------- */
+body > ul {
+  list-style: none;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--gap);
+  position: relative;
+}
+
+body > ul::before {
+  content: 'Hub de Painéis';
+  grid-column: 1 / -1;
+  display: block;
+  background:
+    linear-gradient(135deg, var(--color-primary-strong), var(--color-primary-soft));
+  color: var(--color-text-inverse);
+  border-radius: var(--radius-lg);
+  padding: 28px 28px 22px;
+  box-shadow: var(--color-shadow);
+  font-size: clamp(1.6rem, 2.4vw, 2.2rem);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+body > ul::after {
+  content: 'Acesse os módulos do projeto por aqui. O layout já está preparado para receber novos painéis mantendo o mesmo padrão visual.';
+  grid-column: 1 / -1;
+  margin-top: -8px;
+  margin-bottom: 8px;
+  color: var(--color-text-soft);
+  font-size: 0.98rem;
+  line-height: 1.6;
+  padding: 0 6px;
+}
+
+body > ul > a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  position: relative;
+  isolation: isolate;
+}
+
+body > ul > a li {
+  list-style: none;
+  min-height: 180px;
+  background: linear-gradient(180deg, var(--color-surface) 0%, var(--color-surface-muted) 100%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--color-shadow-soft);
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+}
+
+body > ul > a li::before {
+  content: 'Painel';
+  position: absolute;
+  top: 18px;
+  left: 18px;
+  background: var(--color-accent-soft);
+  color: #7a6113;
+  border: 1px solid rgba(201, 162, 39, 0.35);
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+body > ul > a li::after {
+  content: 'Abrir módulo →';
+  font-size: 0.95rem;
+  color: var(--color-primary-soft);
+  font-weight: 700;
+}
+
+body > ul > a li {
+  font-size: 1.25rem;
+  font-weight: 800;
+  line-height: 1.25;
+}
+
+body > ul > a:hover li,
+body > ul > a:focus-visible li {
+  transform: translateY(-6px);
+  box-shadow: 0 22px 45px rgba(15, 23, 42, 0.12);
+  border-color: rgba(22, 58, 47, 0.22);
+}
+
+body > ul > a:focus-visible {
+  outline: none;
+}
+
+body > ul > a:focus-visible li {
+  box-shadow:
+    0 0 0 4px rgba(201, 162, 39, 0.22),
+    0 22px 45px rgba(15, 23, 42, 0.12);
+}
+
+/* ---------------------------------------------------------
+   VERSÃO PREPARADA PARA QUANDO VOCÊ QUISER EVOLUIR O HTML
+   ---------------------------------------------------------
+   Se depois você trocar a estrutura para classes como:
+   .hub, .hub__hero, .hub__grid, .hub-card...
+   este CSS já terá uma base pronta.
+   --------------------------------------------------------- */
+
+.hub {
+  max-width: var(--container-width);
+  margin: 0 auto;
+}
+
+.hub__hero {
+  background: linear-gradient(135deg, var(--color-primary-strong), var(--color-primary-soft));
+  border-radius: var(--radius-lg);
+  padding: 28px;
+  box-shadow: var(--color-shadow);
+  color: var(--color-text-inverse);
+  margin-bottom: 20px;
+}
+
+.hub__eyebrow {
+  display: inline-block;
+  margin-bottom: 12px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+}
+
+.hub__title {
+  font-size: clamp(1.8rem, 2.8vw, 2.6rem);
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.hub__description {
+  max-width: 760px;
+  color: rgba(255, 255, 255, 0.82);
+  line-height: 1.6;
+}
+
+.hub__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--gap);
+}
+
+.hub-card {
+  background: linear-gradient(180deg, var(--color-surface) 0%, var(--color-surface-muted) 100%);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--color-shadow-soft);
+  padding: 22px;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 200px;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+}
+
+.hub-card:hover,
+.hub-card:focus-visible {
+  transform: translateY(-6px);
+  box-shadow: 0 22px 45px rgba(15, 23, 42, 0.12);
+  border-color: rgba(22, 58, 47, 0.22);
+}
+
+.hub-card__tag {
+  align-self: flex-start;
+  background: var(--color-accent-soft);
+  color: #7a6113;
+  border: 1px solid rgba(201, 162, 39, 0.35);
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.hub-card__title {
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.hub-card__text {
+  color: var(--color-text-soft);
+  line-height: 1.55;
+  flex: 1;
+}
+
+.hub-card__action {
+  color: var(--color-primary-soft);
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
   body {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-    font-family: "Segoe UI", Arial, sans-serif;
-    color: var(--texto-principal);
-    background:
-      radial-gradient(circle at top left, rgba(201, 162, 39, 0.22), transparent 28%),
-      radial-gradient(circle at bottom right, rgba(46, 125, 50, 0.20), transparent 26%),
-      linear-gradient(135deg, #eaf0f6 0%, #f7fafc 48%, #edf3f8 100%);
+    padding: 22px 14px;
   }
-  
-  ul {
-    width: min(100%, 820px);
-    list-style: none;
-    padding: 2.2rem;
-    border: 1px solid rgba(255, 255, 255, 0.55);
-    border-radius: var(--raio-xl);
-    background: var(--bg-card);
-    box-shadow: var(--sombra-forte);
-    backdrop-filter: blur(10px);
-    display: grid;
-    gap: 1rem;
-    position: relative;
-    overflow: hidden;
+
+  body > ul::before {
+    padding: 22px 20px 18px;
+    border-radius: 20px;
   }
-  
-  ul::before {
-    content: "Hub Painel J&F";
-    display: block;
-    font-size: clamp(1.8rem, 2.8vw, 2.5rem);
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    color: var(--cor-primaria);
-    margin-bottom: 0.2rem;
+
+  body > ul > a li {
+    min-height: 150px;
+    padding: 20px;
   }
-  
-  ul::after {
-    content: "Escolha um dos painéis abaixo para abrir o projeto com o visual inspirado nas aulas 13 e 14.";
-    display: block;
-    max-width: 580px;
-    line-height: 1.6;
-    color: var(--texto-secundario);
-    margin-bottom: 1rem;
-  }
-  
-  ul a {
-    text-decoration: none;
-    color: inherit;
-  }
-  
-  ul li {
-    position: relative;
-    padding: 1.3rem 1.4rem;
-    border-radius: var(--raio-lg);
-    border: 1px solid var(--borda);
-    background: linear-gradient(145deg, #ffffff 0%, #f8fbfd 100%);
-    box-shadow: var(--sombra-card);
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: var(--texto-principal);
-    transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
-    overflow: hidden;
-  }
-  
-  ul li::before {
-    content: "Painel";
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 74px;
-    margin-right: 0.9rem;
-    padding: 0.35rem 0.75rem;
-    border-radius: 999px;
-    background: rgba(46, 125, 50, 0.10);
-    color: var(--cor-secundaria);
-    font-size: 0.78rem;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-  
-  ul li::after {
-    content: "→";
-    position: absolute;
-    right: 1.2rem;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1.35rem;
-    color: var(--cor-dourada);
-    transition: transform 0.22s ease;
-  }
-  
-  ul a:hover li,
-  ul a:focus-visible li {
-    transform: translateY(-4px);
-    border-color: rgba(201, 162, 39, 0.65);
-    box-shadow: 0 16px 35px rgba(15, 23, 42, 0.16);
-  }
-  
-  ul a:hover li::after,
-  ul a:focus-visible li::after {
-    transform: translate(4px, -50%);
-  }
-  
-  ul a:nth-of-type(1) li {
-    border-left: 5px solid var(--cor-dourada);
-  }
-  
-  ul a:nth-of-type(2) li {
-    border-left: 5px solid var(--cor-acento);
-  }
-  
-  @media (max-width: 640px) {
-    body {
-      padding: 1rem;
-    }
-  
-    ul {
-      padding: 1.4rem;
-    }
-  
-    ul::after {
-      margin-bottom: 0.6rem;
-    }
-  
-    ul li {
-      padding: 1.05rem 3rem 1.05rem 1rem;
-      font-size: 0.98rem;
-    }
-  
-    ul li::before {
-      display: block;
-      width: fit-content;
-      margin: 0 0 0.65rem 0;
-    }
-  }
-  
+}

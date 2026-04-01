@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Painel J&F — Catálogo de Produtos</title>
+  <style>
+    /* ══════════════════════════════════════════════════════
+       PAINEL J&F — estilos base acumulados até Aula 15
+       ✦ AULA 13: estrutura base, variáveis CSS, header
+       ✦ AULA 14: área de notificações, painel de status
+       ✦ AULA 15: grid de cards, .card-produto, destaques
+       ══════════════════════════════════════════════════════ */
+    :root {
+      --color-navy:      #1E3A5F;
+      --color-dark:      #0D1B2A;
+      --color-teal:      #0891B2;
+      --color-accent:    #38BDF8;
+      --color-white:     #FFFFFF;
+      --color-slate-bg:  #F1F5F9;
+      --color-slate-mid: #CBD5E1;
+      --color-text-dark: #0F172A;
+      --color-text-med:  #475569;
+      --color-amber:     #D97706;
+      --color-green:     #16A34A;
+      --radius-card:     0.5rem;
+      --shadow-card:     0 2px 8px rgba(0,0,0,0.12);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Calibri', 'Segoe UI', system-ui, sans-serif;
+      background: var(--color-slate-bg);
+      color: var(--color-text-dark);
+      min-height: 100vh;
+    }
+
+    /* ✦ AULA 13 — header */
+    .painel-header {
+      background: var(--color-dark);
+      color: var(--color-white);
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      border-bottom: 3px solid var(--color-teal);
+    }
+    .painel-header h1 { font-size: 1.4rem; }
+    .painel-header .badge {
+      font-size: 0.85rem;
+      background: var(--color-teal);
+      padding: 0.2rem 0.6rem;
+      border-radius: 1rem;
+      letter-spacing: 0.05em;
+    }
+
+    main { padding: 1.5rem 2rem; }
+
+    /* ✦ AULA 14 — painel de status / notificações */
+    .painel-status {
+      background: var(--color-navy);
+      color: var(--color-accent);
+      border-radius: var(--radius-card);
+      padding: 0.75rem 1rem;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+      border-left: 4px solid var(--color-teal);
+    }
+
+    /* ✦ AULA 15 — área de destaques */
+    .secao-destaques {
+      margin-bottom: 2rem;
+    }
+    .secao-destaques h2 {
+      font-size: 1rem;
+      color: var(--color-amber);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.25rem;
+      border-bottom: 2px solid var(--color-amber);
+      display: inline-block;
+    }
+    #destaques {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* ✦ AULA 15 — catálogo de produtos */
+    .secao-catalogo h2 {
+      font-size: 1rem;
+      color: var(--color-navy);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.25rem;
+      border-bottom: 2px solid var(--color-navy);
+      display: inline-block;
+    }
+
+    #catalogo {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1rem;
+    }
+
+    /* ✦ AULA 15 — card de produto (criado via JS) */
+    .card-produto {
+      background: var(--color-white);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-card);
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      border-top: 3px solid var(--color-teal);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .card-produto:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    }
+    .card-titulo {
+      font-size: 1rem;
+      color: var(--color-text-dark);
+      font-weight: 600;
+    }
+    .card-preco {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--color-green);
+    }
+    .btn-detalhes {
+      margin-top: 0.5rem;
+      padding: 0.45rem 1rem;
+      background: var(--color-navy);
+      color: var(--color-white);
+      border: none;
+      border-radius: 0.3rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: background 0.15s;
+    }
+    .btn-detalhes:hover { background: var(--color-teal); }
+
+    /* Card de destaque — clone com borda amber */
+    #destaques .card-produto {
+      border-top-color: var(--color-amber);
+      max-width: 240px;
+    }
+
+    /* ✦ AULA 15 — feature 5: :focus-visible (acessibilidade de teclado) */
+    .btn-detalhes:focus-visible {
+      outline: 3px solid var(--color-accent);
+      outline-offset: 2px;
+    }
+    a:focus-visible,
+    button:focus-visible {
+      outline: 3px solid var(--color-accent);
+      outline-offset: 2px;
+    }
+
+    /* ✦ AULA 15 — feature 6: @media responsivo (mobile 600px) */
+    @media (max-width: 600px) {
+      .painel-header {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 0.75rem 1rem;
+        gap: 0.5rem;
+      }
+      .painel-header h1 { font-size: 1.1rem; }
+
+      main { padding: 1rem; }
+
+      #catalogo {
+        grid-template-columns: 1fr;
+      }
+
+      #destaques {
+        flex-direction: column;
+      }
+      #destaques .card-produto {
+        max-width: 100%;
+      }
+
+      .secao-destaques h2,
+      .secao-catalogo h2 {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- ✦ AULA 13 — estrutura base do painel -->
+  <header class="painel-header" role="banner">
+    <h1>Painel J&F</h1>
+    <span class="badge">Instituto J&F — Escola de Tecnologia</span>
+    <span class="badge">DAD 2026</span>
+  </header>
+
+  <main>
+    <!-- ✦ AULA 14 — painel de status dinâmico -->
+    <div class="painel-status" id="painel-status" aria-live="polite">
+      Carregando catálogo de produtos Seara/JBS...
+    </div>
+
+    <!-- ✦ AULA 15 — área de destaques (cards clonados) -->
+    <section class="secao-destaques" aria-labelledby="titulo-destaques">
+      <h2 id="titulo-destaques">Produtos em Destaque</h2>
+      <div id="destaques" role="list" aria-label="Produtos em destaque"></div>
+    </section>
+
+    <!-- ✦ AULA 15 — catálogo dinâmico (gerado por JS) -->
+    <section class="secao-catalogo" aria-labelledby="titulo-catalogo">
+      <h2 id="titulo-catalogo">Catálogo de Produtos</h2>
+      <div id="catalogo" role="list" aria-label="Catálogo de produtos Seara e JBS"></div>
+    </section>
+  </main>
+
+  <!--
+    NOTA DE ARQUITETURA — AULA 15:
+    O #catalogo está propositalmente vazio.
+    Todo o conteúdo é gerado por renderizacao.js a partir do array produtos.
+    Este é o padrão "Dados em JS → HTML via JS" que usaremos até a Aula 30.
+  -->
+  <script src="src/renderizacao.js"></script>
+</body>
+</html>
