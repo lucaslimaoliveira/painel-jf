@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Painel J&F — DAD 2026</title>
+  <style>
+    :root {
+      --color-navy:#1E3A5F;--color-dark:#0D1B2A;--color-teal:#0891B2;
+      --color-accent:#38BDF8;--color-amber:#D97706;--color-green:#16A34A;
+      --color-red:#B91C1C;--color-purple:#7C3AED;--color-white:#FFFFFF;
+      --color-bg:#F1F5F9;--color-muted:#475569;--radius:0.5rem;
+      --shadow:0 2px 8px rgba(0,0,0,0.12);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--color-bg)}
+    .painel-header{background:var(--color-dark);color:var(--color-white);
+      padding:1rem 2rem;display:flex;align-items:center;gap:1rem;
+      border-bottom:3px solid var(--color-teal)}
+    .painel-header h1{font-size:1.4rem}
+    .badge{font-size:.82rem;background:var(--color-teal);color:#fff;
+      padding:.2rem .6rem;border-radius:1rem}
+    .badge-aula{font-size:.82rem;background:var(--color-amber);color:#fff;
+      padding:.2rem .6rem;border-radius:1rem}
+    .painel-status{background:var(--color-navy);color:var(--color-accent);
+      padding:.55rem 2rem;font-size:.9rem}
+    main{padding:1rem 2rem}
+    .barra-filtros{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1.25rem;
+      padding:1rem;background:#fff;border-radius:var(--radius);box-shadow:var(--shadow)}
+    .barra-filtros p{width:100%;font-size:.82rem;font-weight:700;text-transform:uppercase;
+      letter-spacing:.06em;color:var(--color-muted);margin-bottom:.25rem}
+    .btn-filtro{padding:.4rem 1rem;border:1px solid var(--color-teal);border-radius:var(--radius);
+      background:#fff;color:var(--color-teal);font-size:.88rem;font-weight:500;cursor:pointer;
+      transition:background .15s,color .15s}
+    .btn-filtro:hover{background:var(--color-teal);color:#fff}
+    .btn-filtro.ativo{background:var(--color-navy);color:#fff;border-color:var(--color-navy)}
+    .btn-filtro:focus-visible{outline:3px solid var(--color-accent);outline-offset:2px}
+    #catalogo{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem}
+    #destaques{display:flex;flex-wrap:wrap;gap:1rem;margin-bottom:1.5rem}
+    .card-produto{background:#fff;border-radius:var(--radius);box-shadow:var(--shadow);
+      padding:1.25rem;border-top:3px solid var(--color-teal);
+      transition:transform .15s,box-shadow .15s,opacity .2s;position:relative}
+    .card-produto:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.16)}
+    .card-titulo{font-size:.95rem;font-weight:600;margin-bottom:.3rem}
+    .card-empresa{font-size:.75rem;font-weight:700;letter-spacing:.06em;
+      color:var(--color-muted);margin-bottom:.4rem;display:block}
+    .card-preco{font-size:1.15rem;font-weight:700;color:var(--color-green);
+      display:block;margin-bottom:.6rem}
+    .card-produto.oculto{display:none}
+    .card-produto.favorito{border-top-color:var(--color-amber);background:#FFFBEB}
+    .card-produto.favorito::after{content:'★';position:absolute;top:.5rem;right:.75rem;
+      color:var(--color-amber);font-size:1rem}
+    .card-produto.indisponivel{opacity:.5;border-top-color:var(--color-red)}
+    .card-produto.promocao{border-top-color:var(--color-purple);background:#F5F3FF}
+    .card-produto.promocao::before{content:'% PROMOÇÃO';position:absolute;top:-1px;left:-1px;
+      background:var(--color-purple);color:#fff;font-size:.7rem;font-weight:700;
+      padding:.15rem .5rem;border-radius:var(--radius) 0 var(--radius) 0}
+    .btn-favorito{width:100%;padding:.45rem;border:1px solid var(--color-muted);
+      border-radius:.3rem;background:transparent;color:var(--color-muted);
+      font-size:.88rem;cursor:pointer;transition:all .15s}
+    .btn-favorito:hover{border-color:var(--color-amber);color:var(--color-amber)}
+    .card-produto.favorito .btn-favorito{border-color:var(--color-amber);
+      color:var(--color-amber);background:#FEF3C7}
+    .btn-favorito:focus-visible{outline:3px solid var(--color-accent);outline-offset:2px}
+    @media(max-width:600px){
+      .painel-header{flex-direction:column;align-items:flex-start}
+      main{padding:.75rem 1rem}
+      #catalogo{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <header class="painel-header" role="banner">
+    <h1>Painel J&F</h1>
+    <span class="badge">Instituto J&F — Escola de Tecnologia</span>
+    <span class="badge">DAD 2026</span>
+    <span class="badge-aula">✦ Aula 16 — classList</span>
+  </header>
+  <div class="painel-status" id="status-catalogo" aria-live="polite">Carregando...</div>
+  <main>
+    <nav class="barra-filtros" aria-label="Filtrar por empresa">
+      <p>Filtrar por empresa:</p>
+      <button class="btn-filtro ativo" data-filtro="todos"  type="button">Todos</button>
+      <button class="btn-filtro"       data-filtro="seara"  type="button">Seara</button>
+      <button class="btn-filtro"       data-filtro="jbs"    type="button">JBS</button>
+      <button class="btn-filtro"       data-filtro="vigor"  type="button">Vigor</button>
+      <button class="btn-filtro"       data-filtro="flora"  type="button">Flora</button>
+    </nav>
+    <section id="destaques" aria-label="Produtos em destaque"></section>
+    <section id="catalogo"  role="list" aria-label="Catálogo de produtos"></section>
+  </main>
+  <script src="src/renderizacao.js"></script>
+</body>
+</html>
